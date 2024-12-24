@@ -54,15 +54,7 @@ const TaskManagerList = () => {
         if (userId) fetchTasks();
     }, [userId]);
 
-    // const fetchTasks = async () => {
-    //     try {
-    //         const response = await API.get(`/get/${userId}`);
-    //         console.log(response.data)
-    //         setTasks(response.data);
-    //     } catch (err) {
-    //         setError("Error fetching tasks.",err);
-    //     }
-    // };
+  
     const fetchTasks = async () => {
         try {
             const response = await API.get(`/get/${userId}`);
@@ -74,15 +66,6 @@ const TaskManagerList = () => {
         }
     };
 
-
-    // const handleDelete = async (taskId) => {
-    //     try {
-    //         await API.delete(`/delete/${taskId}`);
-    //         setTasks(tasks.filter((task) => task.id !== taskId));
-    //     } catch (err) {
-    //         setError("Error deleting task.");
-    //     }
-    // };
 
     const handleDelete = async (taskId) => {
         try {
@@ -175,26 +158,26 @@ const TaskManagerList = () => {
                 user_id: userId,
                 title: newTaskData.title,
                 description: newTaskData.description,
-                due_date: new Date(newTaskData.due_date).toISOString(), // Ensure correct date format
-                reminder_time: newTaskData.reminderTime, // Match backend's expected key
+                due_date: new Date(newTaskData.due_date).toISOString(),
+                reminder_time: newTaskData.reminderTime, 
             };
 
-            // Make API call
+            
             const response = await API.post('/tasks', taskData);
 
-            // Set success message dynamically from server response
+        
             setSuccess(response.data?.message || 'Task created successfully!');
-            setError(''); // Clear any existing error
+            setError(''); 
 
-            // Reset form and fetch updated tasks
+            
             setNewTaskData({ title: "", description: "", due_date: new Date(), reminder_time: 15 });
             fetchTasks();
-            setAddTaskDialogOpen(false); // Close dialog
+            setAddTaskDialogOpen(false); 
         } catch (err) {
-            // Extract error message from backend or fallback to default
+           
             const errorMessage = err.response?.data?.message || 'Error creating task.';
-            setSuccess(''); // Clear success state
-            setError(errorMessage); // Set error message dynamically
+            setSuccess(''); 
+            setError(errorMessage); 
         }
     };
 
